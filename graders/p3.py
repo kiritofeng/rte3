@@ -1,17 +1,24 @@
+def utf8text(maybe_bytes, errors='strict'):
+    if maybe_bytes is None:
+        return None
+    if isinstance(maybe_bytes, str):
+        return maybe_bytes
+    return maybe_bytes.decode('utf-8', errors)
+
 def check(process_output, judge_output, **kwargs):
-    process_lines = list(filter(None, process_output.split('\n')))
-    judge_lines = list(filter(None, judge_output.split('\n')))
+    process_lines = list(filter(None, utf8text(process_output).split('\n')))
+    judge_lines = list(filter(None, utf8text(judge_output).split('\n')))
 
     if len(process_lines) != len(judge_lines):
         return False
 
-    for process_line, judge_line in zip(process_line, judge_lines):`
+    for process_line, judge_line in zip(process_line, judge_lines):
         try:
-            k-cliques = int(process_line)
+            k-cliques = int(judge_line)
         except ValueError:
             raise Exception('Invalid output file passed!')
         try:
-            if int(judge_line) != k-cliques:
+            if int(process_line) != k-cliques:
                 return False
         except ValueError:
             return False

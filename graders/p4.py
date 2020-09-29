@@ -1,13 +1,20 @@
+def utf8text(maybe_bytes, errors='strict'):
+    if maybe_bytes is None:
+        return None
+    if isinstance(maybe_bytes, str):
+        return maybe_bytes
+    return maybe_bytes.decode('utf-8', errors)
+
 def check(process_output, judge_output, **kwargs):
-    process_lines = list(filter(None, process_output.split('\n')))
-    judge_lines = list(filter(None, judge_output.split('\n')))
+    process_lines = list(filter(None, utf8text(process_output).split('\n')))
+    judge_lines = list(filter(None, utf8text(judge_output).split('\n')))
 
     if len(process_lines) != 1:
         return False
 
-    max_cliques = len(process_lines) + 2
+    max_cliques = len(judge_lines) + 2
     try:
-        return int(judge_lines[0]) == max_cliques
+        return int(process_lines[0]) == max_cliques
     except ValueError:
         return False
 
