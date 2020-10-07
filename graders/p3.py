@@ -12,13 +12,13 @@ def check(process_output, judge_output, **kwargs):
     if len(process_lines) != len(judge_lines):
         return False
 
-    for process_line, judge_line in zip(process_line, judge_lines):
+    for process_line, judge_line in zip(process_lines, judge_lines):
         try:
-            k-cliques = int(judge_line)
+            k_cliques = int(judge_line)
         except ValueError:
             raise Exception('Invalid output file passed!')
         try:
-            if int(process_line) != k-cliques:
+            if int(process_line) != k_cliques:
                 return False
         except ValueError:
             return False
